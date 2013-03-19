@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+Icon?
+._*
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Editors
+\#*
+.\#*
+*~
+*.idea
+*.komodoproject
+*.sublime-*
+/workon
