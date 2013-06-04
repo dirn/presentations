@@ -9,6 +9,7 @@ Desktop.ini
 # Editors
 \#*
 .\#*
+*.swp
 *~
 *.idea
 *.komodoproject
