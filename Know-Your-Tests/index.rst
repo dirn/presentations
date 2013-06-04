@@ -47,7 +47,7 @@ Types of Tests
 Example 1
 =========
 
-::
+.. code:: python
 
     def double(a):
         return a * 2
@@ -59,7 +59,7 @@ Example 1
 Example 1
 =========
 
-::
+.. code:: python
 
     assert double(1) == 2
     assert double(2) == 4
@@ -79,7 +79,7 @@ Example 1
 Example 2
 =========
 
-::
+.. code:: python
 
     def get_github_id(username):
         url = 'https://api.github.com/users/{}'
@@ -95,7 +95,7 @@ Example 2
 Example 2
 =========
 
-::
+.. code:: python
 
     assert get_github_id('dirn') == 168109
     assert get_github_id('dutc') == 3922744
@@ -115,7 +115,7 @@ Example 2
 Example 3
 =========
 
-::
+.. code:: python
 
     <h1>NYCPython GitHub Users</h1>
 
@@ -135,7 +135,7 @@ Example 3
 Example 3
 =========
 
-::
+.. code:: python
 
     browser = webdriver.Chrome()
     browser.get('http://example.com')
@@ -149,7 +149,7 @@ Example 3
 Example 3
 =========
 
-::
+.. code:: python
 
     users = browser.find_element_by_tag_name('dl')
     usernames = users.find_elements_by_tag_name('dt')
