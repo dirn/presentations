@@ -1,0 +1,28 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Know Your Tests</title><meta name="generator" content="Hovercraft! 1.0 http://regebro.github.com/hovercraft"></meta><link rel="stylesheet" href="css/hovercraft.css" media="all"></link><link rel="stylesheet" href="css/impressConsole.css" media="all"></link><link rel="stylesheet" href="css/highlight.css" media="all"></link><link rel="stylesheet" href="hovercraft.css" media="screen,projection"></link></head><body class="impress-not-supported"><div id="impress"><div class="step" step="0" data-x="0" data-y="0"><h1 id="know-your-tests">Know Your Tests</h1><p>A lightning talk by <a href="http://twitter.com/dirn">@dirn</a></p></div><div class="step" step="1" data-x="1600" data-y="0"><h1 id="types-of-tests">Types of Tests</h1><ul><li>Unit Tests</li><li>Integration Tests</li><li>Functional Tests</li></ul></div><div class="step" step="2" data-x="3200" data-y="0"><h1 id="id1">Types of Tests</h1><p><em>Unit tests</em> test that units of your code work.</p></div><div class="step" step="3" data-x="4800" data-y="0"><h1 id="id2">Types of Tests</h1><p><em>Integration tests</em> test how pieces of the application integrate with each
+other.</p></div><div class="step" step="4" data-x="6400" data-y="0"><h1 id="id3">Types of Tests</h1><p><em>Functional tests</em> test that your application actually functions.</p></div><div class="step has-code" step="5" data-x="8000" data-y="0"><h1 id="example-1">Example 1</h1><pre class="highlight ">def double(a):
+    return a * 2</pre></div><div class="step has-code" step="6" data-x="9600" data-y="0"><h1 id="id4">Example 1</h1><pre class="highlight ">assert double(1) == 2
+assert double(2) == 4
+assert double(3) == 6</pre></div><div class="step" step="7" data-x="11200" data-y="0"><h1 id="id5">Example 1</h1><p><strong>Unit Test</strong></p></div><div class="step has-code" step="8" data-x="12800" data-y="0"><h1 id="example-2">Example 2</h1><pre class="highlight ">def get_github_id(username):
+    url = 'https://api.github.com/users/{}'
+    resp = requests.get(url.format(username))
+    if resp.status_code != 200:
+        return None
+    return resp.json().get('id', None)</pre></div><div class="step has-code" step="9" data-x="14400" data-y="0"><h1 id="id6">Example 2</h1><pre class="highlight ">assert get_github_id('dirn') == 168109
+assert get_github_id('dutc') == 3922744
+assert get_github_id('Julian') == 329822</pre></div><div class="step" step="10" data-x="16000" data-y="0"><h1 id="id7">Example 2</h1><p><strong>Integration Test</strong></p></div><div class="step has-code" step="11" data-x="17600" data-y="0"><h1 id="example-3">Example 3</h1><pre class="highlight ">&lt;h1&gt;NYCPython GitHub Users&lt;/h1&gt;
+
+&lt;dl&gt;
+    &lt;dt&gt;dirn
+    &lt;dd&gt;336218
+    &lt;dt&gt;dutc
+    &lt;dd&gt;7845488
+    &lt;dt&gt;Julian
+    &lt;dd&gt;659644
+&lt;/dl&gt;</pre></div><div class="step has-code" step="12" data-x="19200" data-y="0"><h1 id="id8">Example 3</h1><pre class="highlight ">browser = webdriver.Chrome()
+browser.get('http://example.com')
+h1 = browser.find_elements_by_tag_name('h1')
+assert len(h1) == 1</pre></div><div class="step has-code" step="13" data-x="20800" data-y="0"><h1 id="id9">Example 3</h1><pre class="highlight ">dl = browser.find_element_by_tag_name('dl')
+dts = dl.find_elements_by_tag_name('dt')
+dds = dl.find_elements_by_tag_name('dd')
+for user, id in zip(dts, dds):
+    assert double(get_github_id(user)) == id</pre></div><div class="step" step="14" data-x="22400" data-y="0"><h1 id="id10">Example 3</h1><p><strong>Functional test</strong></p></div></div><div id="hovercraft-help" class="hide"><table><tr><th>Space</th><td>Forward</td></tr><tr><th>Left, Down, Page Down</th><td>Next slide</td></tr><tr><th>Right, Up, Page Up</th><td>Previous slide</td></tr><tr><th>P</th><td>Open presenter console</td></tr><tr><th>H</th><td>Toggle this help</td></tr></table></div><script type="text/javascript" src="js/impress.js"></script><script type="text/javascript" src="js/impressConsole.js"></script><script type="text/javascript" src="js/hovercraft.js"></script></body></html>
