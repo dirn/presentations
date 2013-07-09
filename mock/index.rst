@@ -7,39 +7,56 @@
 An Introduction to mock
 =======================
 
-A talk by `@dirn <http://twitter.com/dirn>`_
+A talk by `@dirn <https://twitter.com/dirn>`_
 
 ----
 
-What is mock?
-=============
+What is ``mock``?
 
-*mock* is a library that introduces *fakes* to your tests.
+----
+
+`mock <http://mock.rtfd.org>`_ is a library created by
+`Michael Foord @voidspace <https://twitter.com/voidspace>`_ that introduces
+*fakes* to your tests.
 
 ----
 
 Okay, so what's a fake?
-=======================
+
+----
 
 A *fake* is an object used in tests to take the place of the real code.
 
 ----
 
-Two kinds of fakes
-==================
-
-1. A *mock* is a fake that you use to make assertions about how something is
-   called.
-
-2. A *stub* is a fake that you use to make sure your code handles returned
-   data correctly.
+**But I thought this was about something called mock**
 
 ----
 
-:class: has-code
+A *mock* is a fake that you use to make assertions about how something is
+called.
 
-How does mock work?
-===================
+----
+
+There's another kind of fake called a stub. A *stub* is a fake that you use to
+make sure your code handles returned data correctly.
+
+----
+
+Why would anyone want to use fakes?
+
+----
+
+Fakes allow you to isolate the code you are trying to test from other parts of
+your application.
+
+*e.g., databases, APIs*
+
+----
+
+How do you use ``mock``?
+
+----
 
 .. code:: python
 
@@ -47,17 +64,26 @@ How does mock work?
 
 ----
 
-Using Python 2?
-===============
+Disclaimer
+==========
 
-(╯°□°)╯︵ ┻━┻
+I use Python 3
+
+----
+
+What's that? You're using Python 2?
+
+----
+
+**(╯°□°)╯︵ ┻━┻**
+
+----
+
+Fear not!
 
 ----
 
 :class: has-code
-
-There's a Pip for that
-======================
 
 .. code::
 
@@ -69,44 +95,31 @@ There's a Pip for that
 
 ----
 
-Okay, but how do I use it?
+Okay, but what do you do with it?
+
+----
+
+**Assert things**
+
+----
+
+Disclaimer #2
+=============
+
+The code that follows is oversimplified to demonstrate how easy ``mock`` is. You
+wouldn't actually want to use it.
+
+----
+
+*Seriously, don't use this code!* [*]_
+
+.. [*] Copyright (c) 2013, `James Powell`_
+
+.. _James Powell: http://seriously.dontusethiscode.com
 
 ----
 
 :class: has-code
-
-Replacing objects
-=================
-
-.. code:: python
-
-    class MyClass(object):
-        my_attr = 'value'
-
-    MockClass = mock.Mock()
-    assert not hasattr(MockClass, 'not_my_attr'), 'this will fail'
-
-----
-
-:class: has-code
-
-Replacing objects
-=================
-
-.. code:: python
-
-    class MyClass(object):
-        my_attr = 'value'
-
-    MockClass = mock.Mock(spec=MyClass)
-    assert not hasattr(MockClass, 'not_my_attr'), 'this will pass'
-
-----
-
-:class: has-code
-
-Making assertions
-=================
 
 .. code:: python
 
@@ -115,17 +128,22 @@ Making assertions
 
     real_dict = {'a': 1, 'b': 2}
     copied_dict = copy_dictionary(real_dict)
+
+    # Make sure the objects aren't the same
     assert copied_dict is not real_dict
+
+    # Make sure the keys and values are
     assert set(real_dict.keys()) == set(copied_dict.keys())
     for k, v in real_dict.items():
         assert copied_dict[k] == v
 
 ----
 
-:class: has-code
+With ``mock``
 
-Making assertions
-=================
+----
+
+:class: has-code
 
 .. code:: python
 
@@ -135,14 +153,16 @@ Making assertions
     mock_dict = mock.Mock()
     copy_dictionary(mock_dict)
 
+    # Make sure copy() was called
     mock_dict.copy.assert_was_called_once_with()
 
 ----
 
-:class: has-code
+Another example
 
-Making assertions
-=================
+----
+
+:class: has-code
 
 .. code:: python
 
@@ -158,10 +178,11 @@ Making assertions
 
 ----
 
-:class: has-code
+Again, with ``mock``
 
-Making assertions
-=================
+----
+
+:class: has-code
 
 .. code:: python
 
@@ -177,10 +198,11 @@ Making assertions
 
 ----
 
-:class: has-code
+Now with named arguments
 
-Making assertions
-=================
+----
+
+:class: has-code
 
 .. code:: python
 
@@ -196,6 +218,74 @@ Making assertions
 
 ----
 
+**Replace things**
+
+----
+
+:class: has-code
+
+.. code:: python
+
+    class MyClass(object):
+        my_attr = 'value'
+
+    MockClass = mock.Mock()
+    assert not hasattr(MockClass, 'not_my_attr'), 'uh oh'
+
+----
+
+.. code:: python
+
+    AssertionError: uh oh
+
+----
+
+How do we make a ``Mock`` not have every attribute ever?
+
+¯\\_(ツ)_/¯
+
+----
+
+Specifications to the rescue
+
+----
+
+:class: has-code
+
+.. code:: python
+
+    class MyClass(object):
+        my_attr = 'value'
+
+    MockClass = mock.Mock(spec=MyClass)
+    assert not hasattr(MockClass, 'not_my_attr'), '\O/'
+
+----
+
+**Return things**
+
+----
+
+:class: has-code
+
+.. code:: python
+
+    def add_numbers(a, b):
+        return a + b
+
+    def add_all_numbers(a, b, c):
+        return a + add_numbers(b, c)
+
+    assert add_numbers(1, 2) == 3
+
+    add_numbers = mock.Mock()
+    add_numbers.return_value = 3
+
+    assert add_all_numbers(3, 4, 5) == 6
+    add_numbers.assert_called_once_with(4, 5)
+
+----
+
 But wait, there's more!
 
 ----
@@ -203,12 +293,61 @@ But wait, there's more!
 *Patching*
 ==========
 
-mock's secret sauce
+``mock``'s secret sauce
 
 ----
 
 What's a patch?
 ===============
 
-``patch()`` can be used as a decorator or context manager to your target within
-the current scope.
+``patch()`` can be used as a decorator or context manager to change something
+within the current scope.
+
+----
+
+:class: has-code
+
+.. code:: python
+
+    def return_4():
+        return 4
+
+    with mock.patch('__main__.return_4') as return_5:
+        return_5.return_value = 5
+        assert return_4() == 5
+
+    assert return_4() == 4
+
+----
+
+You can also patch objects
+
+----
+
+:class: has-code
+
+.. code:: python
+
+    class MyClass(object):
+        def my_method(self):
+            raise ValueError()
+
+    with mock.patch.object(MyClass, 'my_method') as my_method:
+        my_method.side_effect = TypeError
+        try:
+            MyClass().my_method()
+        except TypeError:
+            pass
+        else:
+            assert None
+
+    try:
+        MyClass().my_method()
+    except ValueError:
+        pass
+    else:
+        assert None
+
+----
+
+*Questions?*

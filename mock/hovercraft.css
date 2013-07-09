@@ -71,3 +71,11 @@ a:hover {
 #thequestion p {
     font-family: Racing Sans One;
 }
+
+.footnote p {
+    display: inline;
+}
+
+.impress-not-supported .step {
+    margin-bottom: 5em;
+}
