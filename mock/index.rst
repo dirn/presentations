@@ -43,6 +43,10 @@ make sure your code handles returned data correctly.
 
 ----
 
+``mock`` does both.
+
+----
+
 Why would anyone want to use fakes?
 
 ----
@@ -107,7 +111,7 @@ Disclaimer #2
 =============
 
 The code that follows is oversimplified to demonstrate how easy ``mock`` is. You
-wouldn't actually want to use it.
+wouldn't actually want to use any of it.
 
 ----
 
@@ -158,6 +162,18 @@ With ``mock``
 
 ----
 
+What's the difference?
+
+----
+
+Version 1 tests that the *interpreter* implements ``copy()`` correctly.
+
+----
+
+Version 2 tests that *your code* utilizes ``copy()`` correctly.
+
+----
+
 Another example
 
 ----
@@ -173,6 +189,7 @@ Another example
     split_str = split_string(real_str)
     split_str2 = split_string(real_str, 'b')
 
+    # Make sure real_str was split correctly
     assert split_str == ['a', 'b', 'c']
     assert split_str2 == ['a ', ' c']
 
@@ -193,6 +210,7 @@ Again, with ``mock``
     split_string(mock_str)
     split_string(mock_str, 'b')
 
+    # Make sure split() was called correctly
     mock_str.split.assert_any_call(' ')
     mock_str.split.assert_called_with('b')
 
@@ -213,6 +231,7 @@ Now with named arguments
     split_string(mock_str)
     split_string(mock_str, 'b')
 
+    # Make sure split() was called correctly
     mock_str.split.assert_any_call(sep=' ')
     mock_str.split.assert_called_with(sep='b')
 
@@ -230,6 +249,8 @@ Now with named arguments
         my_attr = 'value'
 
     MockClass = mock.Mock()
+
+    # Make sure the class doesn't have the attribute
     assert not hasattr(MockClass, 'not_my_attr'), 'uh oh'
 
 ----
@@ -258,6 +279,8 @@ Specifications to the rescue
         my_attr = 'value'
 
     MockClass = mock.Mock(spec=MyClass)
+
+    # Make sure the class doesn't have the attribute
     assert not hasattr(MockClass, 'not_my_attr'), '\O/'
 
 ----
@@ -276,11 +299,13 @@ Specifications to the rescue
     def add_all_numbers(a, b, c):
         return a + add_numbers(b, c)
 
+    # Check add_numbers()
     assert add_numbers(1, 2) == 3
 
     add_numbers = mock.Mock()
     add_numbers.return_value = 3
 
+    # Check add_all_numbers(), add_numbers() already works
     assert add_all_numbers(3, 4, 5) == 6
     add_numbers.assert_called_once_with(4, 5)
 
@@ -314,8 +339,30 @@ within the current scope.
 
     with mock.patch('__main__.return_4') as return_5:
         return_5.return_value = 5
+        # Check the patched version
         assert return_4() == 5
 
+    # Check the original version
+    assert return_4() == 4
+
+----
+
+:class: has-code
+
+.. code:: python
+
+    def return_4():
+        return 4
+
+    @mock.patch('__main__.return_4')
+    def test_return_4(return_5):
+        return_5.return_value = 5
+        # Check the patched version
+        assert return_4() == 5
+
+    test_return_4()
+
+    # Check the original version
     assert return_4() == 4
 
 ----
@@ -337,16 +384,20 @@ You can also patch objects
         try:
             MyClass().my_method()
         except TypeError:
-            pass
+            pass  # The exception should be raised
         else:
             assert None
 
     try:
         MyClass().my_method()
     except ValueError:
-        pass
+        pass  # The exception should be raised
     else:
         assert None
+
+----
+
+**We've just scratched the surface of** ``mock``
 
 ----
 
