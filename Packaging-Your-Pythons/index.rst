@@ -36,7 +36,7 @@ Where do you begin?
         description='The official package of NYC Python',
         url='https://github.com/NYCPython/nycpython',
         author='Andy Dirnberger',
-        email='andy@nycpython.com',
+        author_email='andy@nycpython.com',
         license='BSD',
         packages=['nycpython'],
         zip_safe=False,
@@ -188,7 +188,7 @@ LICENSE
         long_description=read_file('README.rst'),
         url='https://github.com/NYCPython/nycpython',
         author='Andy Dirnberger',
-        email='andy@nycpython.com',
+        author_email='andy@nycpython.com',
         license=read_file('LICENSE'),
         packages=['nycpython'],
         zip_safe=False,
@@ -244,6 +244,10 @@ PyPI [*]_
 ----
 
 `Sphinx <http://sphinx.rtfd.org>`_
+
+----
+
+`Read the Docs <http://rtfd.org>`_
 
 ----
 
@@ -366,12 +370,25 @@ Installation
 
 ----
 
+``setup.cfg``
+
+----
+
+:class: has-code
+
+.. code:: ini
+
+    [wheel]
+    universal = 1
+
+----
+
 :class: has-code
 
 .. code:: sh
 
     $ pip install wheel
-    $ python setup.py bdist_wheel --universal
+    $ python setup.py bdist_wheel
 
 ----
 
