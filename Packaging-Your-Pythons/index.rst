@@ -44,6 +44,8 @@ Where do you begin?
 
 ----
 
+:data-rotate: 270
+
 *An aside about versions*
 
 ----
@@ -53,6 +55,8 @@ Where do you begin?
 `PEP 440 <http://www.python.org/dev/peps/pep-0440/>`_ (future)
 
 ----
+
+:data-rotate: 0
 
 Package layout
 
@@ -101,6 +105,8 @@ Package layout
 
 ----
 
+:data-rotate: 270
+
 *An aside about modules*
 
 ----
@@ -133,6 +139,8 @@ and
 Growth
 
 ----
+
+:data-rotate: 0
 
 That was easy, right?
 
@@ -229,6 +237,8 @@ Learn from my mistake
 
 ----
 
+:data-rotate: 270
+
 *An aside about reStructured Text*
 
 ----
@@ -250,6 +260,8 @@ PyPI [*]_
 `Read the Docs <http://rtfd.org>`_
 
 ----
+
+:data-rotate: 0
 
 Publishing to PyPI
 ------------------
@@ -314,6 +326,8 @@ Building and Uploading
 
 ----
 
+:data-rotate: 270
+
 *An aside about testing your build*
 
 ----
@@ -332,6 +346,8 @@ Building and Uploading
     '1.0.0'
 
 ----
+
+:data-rotate: 0
 
 :class: has-code
 
@@ -359,6 +375,8 @@ Installation
     $ pip install nycpython
 
 ----
+
+:data-rotate: 270
 
 *An aside about the future*
 
@@ -412,16 +430,16 @@ Installation
 
 .. code:: sh
 
-    $ python setup.py register -r test
-    $ python setup.py sdist upload -r test
+    $ python setup.py bdist_wheel upload -r test
 
 and
 
 .. code:: sh
 
-    $ python setup.py register -r pypi
-    $ python setup.py sdist upload -r pypi
+    $ python setup.py bdist_wheel upload -r pypi
 
 ----
+
+:data-rotate: 0
 
 *Questions?*
