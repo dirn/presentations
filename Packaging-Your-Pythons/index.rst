@@ -101,7 +101,7 @@ Package layout
 .. code:: python
 
     from nycpython import make_the_awesome
-    print(make_the_awesome)
+    print(make_the_awesome())
 
 ----
 
