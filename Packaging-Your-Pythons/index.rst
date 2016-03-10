@@ -298,7 +298,7 @@ Register on the `test site <https://testpypi.python.org/pypi>`_
 
 .. code:: ini
 
-    [disutils]
+    [distutils]
     index-servers =
         pypi
         test
